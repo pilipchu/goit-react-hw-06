@@ -1,46 +1,26 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { contactReducer } from "./contactsSlice";
+import { filterReducer } from "./filtersSlice";
+import persistReducer from "redux-persist/es/persistReducer";
+import persistStore from "redux-persist/es/persistStore";
+import storage from "redux-persist/lib/storage";
 
-export const addContact = (value) => {
-  return {
-    type: "contacts/addContact",
-    payload: { name: value.name, number: value.number, id: Date.now() },
-  };
+const contactsPersistConfig = {
+  key: "contacts",
+  storage,
+  whitelist: ["items"],
 };
-
-const initialState = {
-  contacts: {
-    items: [],
-  },
-  filters: {
-    name: "",
-  },
-};
-
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "contacts/addContact": {
-      return {
-        ...state,
-        contacts: {
-          items: [...state.contacts.items, action.payload],
-        },
-      };
-    }
-    case "contacts/deleteContact": {
-      return {
-        ...state,
-        contacts: {
-          items: state.contacts.items.filter(
-            (item) => item.id !== action.payload
-          ),
-        },
-      };
-    }
-    default:
-      return state;
-  }
-};
+const rootReducer = combineReducers({
+  contacts: persistReducer(contactsPersistConfig, contactReducer),
+  filters: filterReducer,
+});
 
 export const store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
+
+export const persistor = persistStore(store);

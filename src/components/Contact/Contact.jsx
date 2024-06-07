@@ -4,8 +4,7 @@ import { useDispatch } from "react-redux";
 import { deleteContact } from "../../redux/action";
 import css from "./Contact.module.css";
 
-export default function Contact({ data: { name, number, id } }) {
-  console.log(id);
+export default function Contact({ data: { name, phone, id } }) {
   const dispatch = useDispatch();
 
   const handledDelete = () => {
@@ -21,7 +20,7 @@ export default function Contact({ data: { name, number, id } }) {
         </p>
         <p className={css.page}>
           <ImPhone className={css.iconPhone} size="20" />
-          {number}
+          {phone}
         </p>
       </div>
       <button className={css.btn} onClick={handledDelete}>

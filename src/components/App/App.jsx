@@ -1,11 +1,11 @@
 import ContactForm from "../ContactForm/ContactForm";
 import SearchBox from "../SearchBox/SearchBox";
 import ContactList from "../ContactList/ContactList";
-import { useState } from "react";
+// import { useState } from "react";
 // import contactsData from "../contactsData.json";
 import "./App.css";
 
-function App() {
+export default function App() {
   // const [contacts, setContacts] = useState(() => {
   //   const saveContacts = localStorage.getItem("my-contacts");
   //   if (saveContacts !== null) {
@@ -13,7 +13,7 @@ function App() {
   //   }
   //   return contactsData;
   // });
-  const [filter, setFilter] = useState("");
+  // const [filter, setFilter] = useState("");
 
   // useEffect(() => {
   //   localStorage.setItem("my-contacts", JSON.stringify(contacts));
@@ -27,10 +27,8 @@ function App() {
     <div>
       <h1>Phonebook</h1>
       <ContactForm />
-      <SearchBox value={filter} onFilter={setFilter} />
+      <SearchBox />
       <ContactList />
     </div>
   );
 }
-
-export default App;
